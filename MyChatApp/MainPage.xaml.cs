@@ -18,7 +18,7 @@ namespace MyChatApp
             InitDb();
 
             hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://selfhostedminecraftserver.crizzhd.net/chatHub")
+                .WithUrl("https://mychatappserver.crizzhd.net/chatHub")
                 .Build();
 
             hubConnection.On<string, string>("MessageReceived", (name, message) =>

@@ -18,12 +18,13 @@ public partial class Ba : ContentPage
         {
             if (isToggled)
             {
-                await Flashlight.Default.TurnOffAsync();
+                
+                await Flashlight.Default.TurnOnAsync();
 
             }
             else
             {
-                await Flashlight.Default.TurnOnAsync();
+                await Flashlight.Default.TurnOffAsync();
             }
         }
         catch (Exception ex)

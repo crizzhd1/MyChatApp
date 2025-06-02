@@ -17,14 +17,8 @@
 
 
         <Button     
-            Text="Click Me" 
-            Clicked="ToggleAccelerometer"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-
-        <Label 
-            
-            x:Name="WAlk"
+            Text="Start/Stop Recording"
+            Clicked="RecordAudio"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 

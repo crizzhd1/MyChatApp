@@ -1,14 +1,22 @@
 
+using Plugin.Maui.Audio;
+
 namespace MyChatApp;
 
 public partial class Ba : ContentPage
 {
 	bool isToggled = false;
 
-    public Ba()
+    readonly IAudioManager _audioManager;
+    readonly IAudioRecorder _audioRecorder;
+
+    public Ba(IAudioManager audioManager)
 	{
 		InitializeComponent();
-	}
+
+        _audioManager = audioManager;
+        _audioRecorder = audioManager.CreateRecorder();
+    }
 
     async void ToggelLight(object sender, EventArgs e)
     {
@@ -33,29 +41,28 @@ public partial class Ba : ContentPage
         }
     }
 
-    public void ToggleAccelerometer(object sender, EventArgs e)
+    async void RecordAudio(object sender, EventArgs e)
     {
-        if (Accelerometer.Default.IsSupported)
+        try
         {
-            if (!Accelerometer.Default.IsMonitoring)
+            if (await Permissions.RequestAsync<Permissions.Microphone>() != PermissionStatus.Granted) return;
+
+            if (!_audioRecorder.IsRecording)
             {
-                // Turn on accelerometer
-                Accelerometer.Default.ReadingChanged += Accelerometer_ReadingChanged;
-                Accelerometer.Default.Start(SensorSpeed.UI);
+               await _audioRecorder.StartAsync();
             }
             else
             {
-                // Turn off accelerometer
-                Accelerometer.Default.Stop();
-                Accelerometer.Default.ReadingChanged -= Accelerometer_ReadingChanged;
+               var recordedAudio =  await _audioRecorder.StopAsync();
+               var player = _audioManager.CreatePlayer(recordedAudio.GetAudioStream());
+               player.Play();
             }
         }
-    }
 
-    private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
-    {
-        // Update UI Label with accelerometer state
-        WAlk.TextColor = Colors.Green;
-        WAlk.Text = $"Accel: {e.Reading}";
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+            return;
+        }
     }
 }

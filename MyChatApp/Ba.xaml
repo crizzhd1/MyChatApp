@@ -10,17 +10,24 @@
             HorizontalOptions="Center" />
 
         <Button     
-            Text="Click Me" 
+            Text="Turn On/Off Flashlight" 
             Clicked="ToggelLight"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            Margin="0,20,0,20"/>
 
+        <Label 
+            x:Name="RecStat"
+            Text="" 
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
 
         <Button     
             Text="Start/Stop Recording"
             Clicked="RecordAudio"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            Margin="0,20,0,20"/>
 
     </VerticalStackLayout>
     

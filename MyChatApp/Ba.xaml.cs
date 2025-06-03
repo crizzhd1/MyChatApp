@@ -50,11 +50,13 @@ public partial class Ba : ContentPage
             if (!_audioRecorder.IsRecording)
             {
                await _audioRecorder.StartAsync();
+               RecStat.Text = "Recording... Tap to stop.";
             }
             else
             {
                var recordedAudio =  await _audioRecorder.StopAsync();
                var player = _audioManager.CreatePlayer(recordedAudio.GetAudioStream());
+               RecStat.Text = "Stoped Recording... Now Playing Back";
                player.Play();
             }
         }

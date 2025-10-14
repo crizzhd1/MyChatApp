@@ -1,5 +1,6 @@
-
+﻿
 using Plugin.Maui.Audio;
+using CommunityToolkit.Maui.Storage;
 
 namespace MyChatApp;
 
@@ -9,7 +10,7 @@ public partial class Ba : ContentPage
 
     readonly IAudioManager _audioManager;
     readonly IAudioRecorder _audioRecorder;
-
+   
     public Ba(IAudioManager audioManager)
 	{
 		InitializeComponent();
@@ -18,6 +19,7 @@ public partial class Ba : ContentPage
         _audioRecorder = audioManager.CreateRecorder();
     }
 
+#if ANDROID
     async void ToggelLight(object sender, EventArgs e)
     {
         isToggled = !isToggled;
@@ -40,8 +42,8 @@ public partial class Ba : ContentPage
             await DisplayAlert("Error", ex.Message, "OK");
         }
     }
-
-    async void RecordAudio(object sender, EventArgs e)
+#endif
+    public async void RecordAudio(object sender, EventArgs e)
     {
         try
         {
@@ -54,10 +56,9 @@ public partial class Ba : ContentPage
             }
             else
             {
-               var recordedAudio =  await _audioRecorder.StopAsync();
-               var player = _audioManager.CreatePlayer(recordedAudio.GetAudioStream());
-               RecStat.Text = "Stoped Recording... Now Playing Back";
-               player.Play();
+                var audioStream = await _audioRecorder.StopAsync();
+                await SaveAudioToUserLocationAsync(audioStream.GetAudioStream());
+                RecStat.Text = "Stoped Recording... and Saved";
             }
         }
 
@@ -67,4 +68,49 @@ public partial class Ba : ContentPage
             return;
         }
     }
+
+    async Task SaveAudioToUserLocationAsync(Stream audioStream)
+    {
+        var fileName = $"recording_{DateTime.Now:yyyyMMdd_HHmmss}.wav";
+
+        using var memoryStream = new MemoryStream();
+        await audioStream.CopyToAsync(memoryStream);
+        memoryStream.Position = 0;
+
+        var platform = DeviceInfo.Current.Platform;
+
+        if (platform == DevicePlatform.WinUI || platform == DevicePlatform.MacCatalyst)
+        {
+            // ✅ Desktop: use FileSaver
+            try
+            {
+                var result = await FileSaver.Default.SaveAsync(fileName, memoryStream);
+                if (result.IsSuccessful)
+                    await Shell.Current.DisplayAlert("Saved", $"File saved to {result.FilePath}", "OK");
+                else
+                    await Shell.Current.DisplayAlert("Error", result.Exception?.Message ?? "Save failed", "OK");
+            }
+            catch (NotImplementedException)
+            {
+                await Shell.Current.DisplayAlert("Error", "File saver not supported on this platform.", "OK");
+            }
+        }
+        else
+        {
+            // ✅ Mobile fallback
+            try
+            {
+                var filePath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+                using var fileStream = File.Create(filePath);
+                memoryStream.Position = 0;
+                await memoryStream.CopyToAsync(fileStream);
+                await Shell.Current.DisplayAlert("Saved", $"Saved to: {filePath}", "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
+    }
 }
+

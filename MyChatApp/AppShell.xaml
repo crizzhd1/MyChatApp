@@ -3,21 +3,23 @@
     x:Class="MyChatApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Shell.TabBarBackgroundColor="Transparent"
-    xmlns:local="clr-namespace:MyChatApp">
-    
-    <TabBar>
+    xmlns:local="clr-namespace:MyChatApp"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="#121212"
+    Shell.TabBarForegroundColor="#FFFFFF"
+    Shell.TabBarTitleColor="#FFFFFF"
+    Shell.TabBarUnselectedColor="#888888">
 
-        <Tab Title="Chat" Icon="chat.png">
+    <TabBar>
+        <Tab Title="Chat">
             <ShellContent
                 ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
-
-        <Tab Title="Ba">
-            <ShellContent 
-                ContentTemplate="{DataTemplate local:Ba}" />
-        </Tab>
         
+        <Tab Title="Tools">
+            <ShellContent 
+                ContentTemplate="{DataTemplate local:Tools}" />
+        </Tab>
     </TabBar>
-
 </Shell>

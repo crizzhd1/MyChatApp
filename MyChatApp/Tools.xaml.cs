@@ -4,14 +4,13 @@ using CommunityToolkit.Maui.Storage;
 
 namespace MyChatApp;
 
-public partial class Ba : ContentPage
+public partial class Tools : ContentPage
 {
 	bool isToggled = false;
-
     readonly IAudioManager _audioManager;
     readonly IAudioRecorder _audioRecorder;
    
-    public Ba(IAudioManager audioManager)
+    public Tools(IAudioManager audioManager)
 	{
 		InitializeComponent();
 
@@ -19,8 +18,7 @@ public partial class Ba : ContentPage
         _audioRecorder = audioManager.CreateRecorder();
     }
 
-#if ANDROID
-    async void ToggelLight(object sender, EventArgs e)
+    public async void ToggelLight(object sender, EventArgs e)
     {
         isToggled = !isToggled;
 
@@ -42,7 +40,7 @@ public partial class Ba : ContentPage
             await DisplayAlert("Error", ex.Message, "OK");
         }
     }
-#endif
+
     public async void RecordAudio(object sender, EventArgs e)
     {
         try

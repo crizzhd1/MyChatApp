@@ -63,7 +63,7 @@ namespace MyChatApp
             var user = col.FindById(1);
             user.Name = nameEntry.Text;
             nameEntry.Text = string.Empty;
-            NameDisplay.Text = user.Name;
+            nameEntry.Text = user.Name;
             _name = user.Name;
             col.Update(user);
         }
@@ -79,7 +79,7 @@ namespace MyChatApp
                 var user = col.FindById(1);
                 if (user != null)
                 {
-                    NameDisplay.Text = user.Name;
+                    nameEntry.Text = user.Name;
                     _name = user.Name;
                 }
             }
@@ -87,7 +87,7 @@ namespace MyChatApp
             {
                 var user = new User { Id = 1, Name = "New User" };
                 col.Insert(user);
-                NameDisplay.Text = user.Name;
+                nameEntry.Text = user.Name;
                 _name = "New User";
             }
         }

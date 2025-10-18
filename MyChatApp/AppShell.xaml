@@ -10,7 +10,7 @@
     Shell.TabBarForegroundColor="#FFFFFF"
     Shell.TabBarTitleColor="#FFFFFF"
     Shell.TabBarUnselectedColor="#888888">
-
+    
     <TabBar>
         <Tab Title="Chat">
             <ShellContent

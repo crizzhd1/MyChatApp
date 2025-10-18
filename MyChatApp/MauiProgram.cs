@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Plugin.Maui.Audio;
+﻿using Plugin.Maui.Audio;
 using CommunityToolkit.Maui.Core;
 
 namespace MyChatApp
@@ -19,10 +18,6 @@ namespace MyChatApp
                 });
 
             builder.AddAudio();
-
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
 
             return builder.Build();
         }

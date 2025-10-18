@@ -1,6 +1,5 @@
-﻿
+﻿using CommunityToolkit.Maui.Storage;
 using Plugin.Maui.Audio;
-using CommunityToolkit.Maui.Storage;
 
 namespace MyChatApp;
 
@@ -9,16 +8,16 @@ public partial class Tools : ContentPage
 	bool isToggled = false;
     readonly IAudioManager _audioManager;
     readonly IAudioRecorder _audioRecorder;
-   
+
     public Tools(IAudioManager audioManager)
-	{
+    {
 		InitializeComponent();
 
         _audioManager = audioManager;
         _audioRecorder = audioManager.CreateRecorder();
     }
 
-    public async void ToggelLight(object sender, EventArgs e)
+    public async void ToggePhonelLight(object sender, EventArgs e)
     {
         isToggled = !isToggled;
 
@@ -35,6 +34,10 @@ public partial class Tools : ContentPage
                 await Flashlight.Default.TurnOffAsync();
             }
         }
+        catch (FeatureNotSupportedException)
+        {
+            await DisplayAlert("Not supported", "Flashlight is not supported on this device.", "OK");
+        }
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "OK");
@@ -49,8 +52,8 @@ public partial class Tools : ContentPage
 
             if (!_audioRecorder.IsRecording)
             {
-               await _audioRecorder.StartAsync();
-               RecStat.Text = "Recording... Tap to stop.";
+                await _audioRecorder.StartAsync();
+                RecStat.Text = "Recording... Tap to stop.";
             }
             else
             {

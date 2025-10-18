@@ -50,7 +50,6 @@
             Grid.Row="1"
             BackgroundColor="#2D2D2D"
             HeightRequest="400"
-            VerticalOptions="FillAndExpand"
             Margin="0,0,0,10"
             >
             <VerticalStackLayout 

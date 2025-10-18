@@ -7,7 +7,7 @@ namespace MyChatApp
     {
         readonly HubConnection hubConnection;
         string? _name;
-        string dbPath;
+        readonly string dbPath;
 
         public MainPage()
         {
@@ -96,6 +96,6 @@ namespace MyChatApp
     public class User
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

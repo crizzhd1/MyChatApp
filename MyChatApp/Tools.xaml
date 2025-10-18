@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyChatApp.Tools"
-             BackgroundColor="#121212"
-             Title="Tools">
+             x:Class ="MyChatApp.Tools">
 
     <ScrollView>
         <VerticalStackLayout
@@ -23,12 +21,18 @@
             <!-- Flashlight section -->
             <Border
                 BackgroundColor="#1E1E1E"
-                Shadow="5"
                 Stroke="#4CAF50"
                 StrokeThickness="2"
-                StrokeShape="RoundRectangle 16"
                 Padding="20"
                 WidthRequest="300">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.3" Radius="5" />
+                </Border.Shadow>
 
                 <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                     <Label 
@@ -39,8 +43,7 @@
 
                     <Button      
                         Text="Turn On / Off"
-                        Clicked="ToggelLight"
-                        IsVisible="{OnPlatform Android=true, iOS=false, WinUI=false}"
+                        Clicked="ToggePhonelLight"
                         BackgroundColor="#4CAF50"
                         TextColor="White"
                         CornerRadius="12"
@@ -52,11 +55,18 @@
             <Border
                 BackgroundColor="#1E1E1E"
                 Padding="20"
-                Shadow="5"
                 Stroke="#2196F3"
                 StrokeThickness="2"
-                StrokeShape="RoundRectangle 16"
                 WidthRequest="300">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.3" Radius="5" />
+                </Border.Shadow>
+
 
                 <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                     <Label 
@@ -79,6 +89,7 @@
                         TextColor="White"
                         CornerRadius="12"
                         WidthRequest="200" />
+
                 </VerticalStackLayout>
             </Border>
         </VerticalStackLayout>

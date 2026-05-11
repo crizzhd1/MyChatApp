@@ -1,20 +1,23 @@
 ﻿using CommunityToolkit.Maui.Storage;
 using Plugin.Maui.Audio;
+using YoutubeDLSharp;
 
 namespace MyChatApp;
 
 public partial class Tools : ContentPage
 {
-	bool isToggled = false;
+    bool isToggled = false;
     readonly IAudioManager _audioManager;
     readonly IAudioRecorder _audioRecorder;
+    YoutubeDL youtube;
 
     public Tools(IAudioManager audioManager)
     {
-		InitializeComponent();
+        InitializeComponent();
 
         _audioManager = audioManager;
         _audioRecorder = audioManager.CreateRecorder();
+        youtube = new YoutubeDL();
     }
 
     public async void ToggePhonelLight(object sender, EventArgs e)
@@ -113,5 +116,16 @@ public partial class Tools : ContentPage
             }
         }
     }
+
+    public async Task DownloadYouTubeAudio()
+    {
+        var FilePath = @"C:\Users\user\Downloads\";
+        var link = "https://www.youtube.com/watch?v=OlP4ZrIEVIg";
+        
+        youtube.OutputFolder = FilePath;
+       
+        var result = await youtube.RunAudioDownload(link);
+    }
 }
+
 
